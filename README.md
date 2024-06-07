@@ -1,14 +1,12 @@
 
-**dlmubachelorthesis：**
+dlmubachelorthesis
+===
 **2024大连海事大学本科毕业论文模板**
-**使用指北**
 
 **JL**, [yhlaozero2@163.com](yhlaozero2@163.com)
 **v1.0(2024/06)**
 
 ***
-
-[TOC]
 
 #### 摘要
 
