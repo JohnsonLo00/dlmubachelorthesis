@@ -22,7 +22,7 @@ dlmubachelorthesis(**D**a**l**ian **M**aritime **U**niversity **Bachelor Thesis*
 1.  查阅`gbk_of_dlmubachelorthesis.pdf`；
 2.  查阅相关手册（e.g. texdoc）
 3.  Retrieving on the Internet；
-4.  GitHub：将具体情况说明提交到Issue；
+4.  GitHub：将具体情况说明提交到Issues；
 5.  联系JL，提供具体情况说明。
 
 此外，本模板处于受维护状态，下一步大致的更新方向如下：
