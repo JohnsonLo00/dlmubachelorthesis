@@ -43,11 +43,11 @@ dlmubachelorthesis(**D**a**l**ian **M**aritime **U**niversity **Bachelor Thesis*
 
 目前可从三个平台上获取到本模板：
 
--   GitHub： **【未完待续】**
+-   [**GitHub**](https://github.com/JohnsonLo00/dlmubachelorthesis)
 
--   Gitee： **【未完待续】**
+-   [**Gitee**](https://gitee.com/jhonson-lo/dlmubachelorthesis)
 
--   Overleaf： **【未完待续】**
+-   [**Overleaf**](https://www.overleaf.com/latex/templates/dlmubachelorthesis-dalian-maritime-university-bachelor-thesis-latex-template/jmhcvgfckdyy)
 
 ## 模板运行前的配置
 
