@@ -1,7 +1,7 @@
-% 
+%
 % This is file "dlmubachelorthesis.cls"
-% 
-% Copyright (C) 2023-2024 by JL <yhlaozero2@163.com>  
+%
+% Copyright (C) 2023-2024 by JL <yhlaozero2@163.com>
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either version 1.3
@@ -10,7 +10,7 @@
 %   https://www.latex-project.org/lppl.txt
 % and version 1.3c or later is part of all distributions of LaTeX
 % version 2008 or later.
-% 
+%
 
 
 % --------------- 全局设置 --------------- %
@@ -355,7 +355,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   %%% ---------- LOGO下方的大字号标题 ---------- %
   \begin{textblock}{10}(5.5,9.85)
     \centering
-    \fontsize{40pt}{26pt}\selectfont{\heiti\bfseries 本科毕业论文}\\
+    \fontsize{40pt}{26pt}\selectfont{\heiti 本科毕业论文}\\
   \end{textblock}
   %%% ======================================== %
 
@@ -548,7 +548,27 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ============================================================ %
 
 
+% --------------- 对sty,cls的命令的定制 --------------- %
+\RequirePackage{etoolbox}
+
+\apptocmd{\makepages}{
+\pagestyle{plain} %从摘要到目录，设置为无页眉、有页脚的模式
+\pagenumbering{Roman} %《手册》要求：从摘要到目录，设置罗马数字页码
+\renewcommand{\baselinestretch}{1.25}
+}{\typeout{succeeds: edit the style of page using package etoolbox}}{\PackageError{fails: edit the style of page using package etoolbox}}
+
+\BeforeBeginEnvironment{thebibliography}{
+\addcontentsline{toc}{section}{参~ 考~ 文~ 献} %不能放在导言区
+\vspace*{0pt}
+}{\typeout{succeeds: pre-style of env thebibliography}}{\typeout{fails: pre-style of env thebibliography}}
+
+\AfterEndEnvironment{thebibliography}{
+\clearpage\vspace*{0pt}
+}{\typeout{succeeds: aft-style of env thebibliography}}{\typeout{fails: aft-style of env thebibliography}}
+
+% ======================================== %
+
+
 % --------------- 超链接与交叉引用 --------------- %
 \RequirePackage[hidelinks, bookmarksnumbered=true, breaklinks=true]{hyperref} %参数bookmarksnumbered使得PDF书签自带编号
 % ======================================== %
-
