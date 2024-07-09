@@ -30,13 +30,12 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % ---------- 文档类声明命令的可选参数初始化 ---------- %
-\newif\if@dlmuthesis@coverpage %【封面页控制，初始值为真，下同】
-\newif\if@dlmuthesis@bindingpage %【装订页的控制】
-\newif\if@dlmuthesis@titlepage %【标题页的控制】
+\RequirePackage{zhnumber} %【中文数字】
+\newif\if@dlmuthesis@bachelors %【理工科模式，初始值为真，下同】
+\newif\if@dlmuthesis@bachelorh %【文科模式，初始值为真，下同】
 
-\DeclareOption{coverpage}{\@dlmuthesis@coverpagetrue}
-\DeclareOption{bindingpage}{\@dlmuthesis@bindingpagetrue}
-\DeclareOption{titlepage}{\@dlmuthesis@titlepagetrue}
+\DeclareOption{bachelors}{\@dlmuthesis@bachelorstrue}
+\DeclareOption{bachelorh}{\@dlmuthesis@bachelorhtrue}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions\relax %【这句万万不可改动】
 \LoadClass[a4paper, 12pt]{article} %【导入正规文档类】
@@ -45,6 +44,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- ctex宏集设置 --------------- %
 \RequirePackage[UTF8, heading=true, zihao = -4]{ctex}
+\RequirePackage{totcount}
+
+\if@dlmuthesis@bachelors
 \ctexset{
   abstractname = {\zihao{3}摘\hspace{2em}要},
   contentsname = \hfill{\zihao{3}目\hspace{2em}录}\hfill,
@@ -55,17 +57,59 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     beforeskip=6.75pt,
     afterskip=6.75pt,
   },
-  subsection={
+  subsection = {
     format={\zihao{4}\bfseries},
-	beforeskip=6.75pt,
+    beforeskip=6.75pt,
     afterskip=6.75pt,
   },
-  subsubsection={
+  subsubsection = {
     format={\zihao{-4}\bfseries},
 	beforeskip=6.75pt,
     afterskip=6.75pt,
   }
 }
+\else\if@dlmuthesis@bachelorh
+\renewcommand\thesubsection{\arabic{subsection}} %重设二级标题计数器格式
+\renewcommand\thesubsubsection{\arabic{subsubsection}} %重设三级标题计数器格式
+\renewcommand\theparagraph{\arabic{paragraph}} %重设四级标题计数器格式
+\ctexset{
+  abstractname = {\zihao{3}摘\hspace{2em}要},
+  contentsname = \hfill{\zihao{3}目\hspace{2em}录}\hfill,
+  bibname = \hfill{\zihao{3}参~ 考~ 文~ 献}\hfill,
+  section = {
+    format = {\zihao{3}\bfseries},
+    name = {,、},
+    number = \zhnumber{\thesection},
+    aftername = {},
+    beforeskip=6.75pt,
+    afterskip=6.75pt,
+  },
+  subsection = {
+    format={\zihao{4}\bfseries},
+    name = {（,）},
+    number = \zhnumber{\thesubsection},
+    aftername = {},
+    beforeskip=6.75pt,
+    afterskip=6.75pt,
+  },
+  subsubsection = {
+    format={\zihao{-4}\bfseries},
+    name = {,.~},
+    aftername = {},
+    beforeskip=6.75pt,
+    afterskip=6.75pt,
+  },
+  paragraph={
+    format={\zihao{-4}\bfseries},
+    name = {（,）},
+    aftername = {},
+    aftertitle = \par,
+    beforeskip=6.75pt,
+    afterskip=6.75pt,
+  }
+}
+\fi\fi
+
 % ======================================== %
 
 
@@ -105,9 +149,22 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- 目录样式 --------------- %
 \RequirePackage{titletoc}
-\titlecontents{section}[0pt]{\addvspace{2pt}\filright}
+\titlecontents{section}
+[0pt]
+{\addvspace{2pt}\filright}
 {\contentspush{\thecontentslabel\ }}
-{}{\titlerule*[8pt]{.}\contentspage}
+{}
+{\titlerule*[8pt]{.}\contentspage}
+\if@dlmuthesis@bachelorh
+\titlecontents{subsubsection}
+[5em]
+{}
+{\contentslabel{1em}}
+{\hspace*{5pt}}
+{\titlerule*[8pt]{.}\contentspage}
+\else
+\fi
+
 % ======================================== %
 
 
@@ -183,16 +240,25 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % --------------- 标题样式：章、节、条、款、项 --------------- %
 \RequirePackage{titlesec}
 \setcounter{secnumdepth}{4}
-\setcounter{tocdepth}{4}
+
+\if@dlmuthesis@bachelors
 \titleformat{\paragraph}
   {\normalsize\bfseries} %字体
   {\theparagraph} %标题前的标签
   {1em} %标题和标签之间的间距
   {} %标题前没有额外的命令或内容
+\else\if@dlmuthesis@bachelorh
+\titleformat{\paragraph}
+  {\normalsize\bfseries} %字体
+  {（\theparagraph）} %标题前的标签
+  {1em} %标题和标签之间的间距
+  {} %标题前没有额外的命令或内容
+\fi
 \titlespacing{\paragraph}
   {0pt} %标题左间距
   {0.5ex \@plus 1ex \@minus.2ex} %标题上间距
   {0.5ex \@plus .2ex} %标题下间距
+
 \newcommand{\fourthsection}[1]{\paragraph{#1}} %将命令\paragraph改名为四级标题
 % ======================================== %
 
@@ -262,7 +328,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \RequirePackage{ifthen} %【引入条件判断逻辑】
 \RequirePackage{etoolbox} %【文档类与宏包的命令自定义】
 \RequirePackage[absolute,overlay]{textpos} %【提供基于坐标的文本框环境，其中overlay为绝对坐标】
-\RequirePackage{zhnumber} %【中文数字】
 %% -------------------- 图片&表格 -------------------- %
 \RequirePackage{array} %【与表格相关】
 %% ============================================================ %
@@ -317,22 +382,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- 封面页的导入 --------------- %
 \newcommand{\makepages}{
-  \if@dlmuthesis@coverpage{
-    \makecoverpage %【封面页控制】
-  }
-  \else
-  \fi
-  \if@dlmuthesis@bindingpage{
-    \makebindingpage %【装订页控制】
-  }
-  \else
-  \fi
-  \if@dlmuthesis@titlepage{
-    \maketitlepage %【标题页控制】
-  }
-  \else
-  \fi
+\makecoverpage
 }
+% ======================================== %
 
 
 % ------------------------- 封面页的导入 ------------------------- %
