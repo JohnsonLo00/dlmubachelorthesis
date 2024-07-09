@@ -122,7 +122,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- 列表环境 --------------- %
 \RequirePackage[inline]{enumitem}
-\setlist{leftmargin=0pt, itemindent=2\parindent, nosep}
+\setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, parsep=0pt}
 % ======================================== %
 
 
@@ -134,7 +134,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newcommand\lt{\left}
 \newcommand\rt{\right}
 \DeclareMathOperator{\diff}{\,\mathrm{d}\hspace{-1.5pt}} %微分算子
-\newcommand\bfunit[1]{\unit{\bf{#1}}} %加粗的数值单位
 
 \RequirePackage{amsthm}
 \newtheoremstyle{newthmstyle}
@@ -316,7 +315,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ================================================================================ %
 
 
-% --------------- 封面页、装订页、标题页的导入 --------------- %
+% --------------- 封面页的导入 --------------- %
 \newcommand{\makepages}{
   \if@dlmuthesis@coverpage{
     \makecoverpage %【封面页控制】
@@ -417,136 +416,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ============================================================ %
 
 
-% ------------------------- 装订页的导入 ------------------------- %
-
-%% -------------------- 基于box定义装订线 -------------------- %
-\newsavebox{\bindingline}
-\savebox{\bindingline}{
-\begin{tabular}{{>{\centering\arraybackslash}p{0mm}}} %【疑惑:5mm生成的效果不像5mm，因此暂时设为3mm】
- \hline
-  ~ \\ \hline
-  ~ \\ \hline
-  ~ \\ \hline
-  ~ \\ \hline
-  ~ \\ \hline
-  ~ \\ \hline
- 装 \\ \hline
-  ~ \\ \hline
-  ~ \\ \hline
-  ~ \\ \hline
-  ~ \\ \hline
-  ~ \\ \hline
-  ~ \\ \hline
- 订 \\ \hline
-  ~ \\ \hline
-  ~ \\ \hline
-  ~ \\ \hline
-  ~ \\ \hline
-  ~ \\ \hline
-  ~ \\ \hline
- 线 \\ \hline
-  ~ \\ \hline
-  ~ \\ \hline
-  ~ \\ \hline
-  ~ \\ \hline
-\end{tabular}
-}
-%% ============================================================ %
-
-%% ------------------------------ 装订页生成命令的定义 ------------------------------ %
-\newcommand{\makebindingpage}{
-  \thispagestyle{empty} %【无页眉页脚】
-  \setlength{\extrarowheight}{9pt} %【设置表格行间距】
-  \setlength{\TPHorizModule}{1cm} % 设置textblock环境的水平单位
-  \setlength{\TPVertModule}{1cm} % 设置textblock环境的垂直单位
-
-  ~\newline %【起到将封面页与正文隔离的预作用(该文件最后是正式作用)，少了这句不行】
-
-  %%% ---------- 装订线 ---------- %
-  \begin{textblock}{0.5}(3.0,6)
-    \centering
-    \usebox{\bindingline}
-  \end{textblock}
-  %%% ======================================== %
-
-  %%% ---------- 首行：校名 ---------- %
-  \begin{textblock}{15}(3,7.0)
-    \centering
-    \fontsize{26pt}{26pt}\selectfont{\bfseries 大连海事大学}\\
-  \end{textblock}
-  %%% ======================================== %
-
-  %%% ---------- 第二行内容：“毕业论文” ---------- %
-  \begin{textblock}{10}(5.5,10.85)
-    \centering
-    \fontsize{48pt}{48pt}\selectfont{\bfseries 毕~~业~~论~~文}\\
-  \end{textblock}
-  %%% ======================================== %
-
-  %%% ---------- 第三行内容：论文完成日期 ---------- %
-  \begin{textblock}{15}(3.3,21.0)
-    \centering
-    \fontsize{16pt}{16pt}\selectfont{\bfseries \dlmuthesis@tokens@completiondateinBINDINGPAGE}\\
-  \end{textblock}
-  %%% ================================================== %
-
-  \newpage %【起到将封面页与正文隔离开的正式作用】
-}
-%% ================================================================================ %
-
-% ============================================================ %
-
-
-% ------------------------- 标题页的导入 ------------------------- %
-\newcommand{\maketitlepage}{
-  \thispagestyle{empty} %【无页眉页脚】
-  \setlength{\extrarowheight}{9pt} %【设置表格行间距】
-  \setlength{\TPHorizModule}{1cm} % 设置textblock环境的水平单位
-  \setlength{\TPVertModule}{1cm} % 设置textblock环境的垂直单位
-
-  ~\newline %【起到将封面页与正文隔离的预作用(该文件最后是正式作用)，少了这句不行】
-
-  %% ---------- 第一行：论文中文题目 ---------- %
-  \begin{textblock}{13}(4.3,8.0)
-    \centering
-    \fontsize{22pt}{22pt}\selectfont{\dlmuthesis@tokens@cntitle}\\
-  \end{textblock}
-  %% ======================================== %
-
-  %% -------------------- 标题页信息栏 -------------------- %
-  \begin{textblock}{15}(3.3,13.9)
-    \centering
-    \renewcommand{\arraystretch}{1.5}
-    \begin{tabular}
-      {
-      >{\fontsize{22pt}{22pt}\selectfont}m{3.8cm}
-      >{\centering\arraybackslash\fontsize{22pt}{22pt}\selectfont}p{8.0cm}
-      }
-      专\hfill 业\hfill 班\hfill 级: & \dlmuthesis@tokens@majorinTITLEPAGE \\
-      \cline{2-2}
-      姓\hfill 名: & \dlmuthesis@tokens@aauthor \\
-      \cline{2-2}
-      指\hfill 导\hfill 教\hfill 师: & \dlmuthesis@tokens@mentorONEinTITLEPAGE \\
-      \cline{2-2}
-    \end{tabular}
-  \end{textblock}
-  %% ================================================== %
-
-  %% ---------- 最后一行：学院 ---------- %
-  \begin{textblock}{15}(3,22.0)
-    \centering
-    \fontsize{22pt}{22pt}\selectfont{\dlmuthesis@tokens@faculty}\\
-  \end{textblock}
-  %% ======================================== %
-
-  %% ---------- 由于之前将\extrarowheight的值设为8pt，为保证往后正文表格的间距正常，需重新设置回来 ---------- %
-  \setlength{\extrarowheight}{2pt}
-  %% ==================================================================================================== %
-
-  \newpage %【起到将封面页与正文隔离开的正式作用】
-}
-% ============================================================ %
-
 
 % --------------- 对sty,cls的命令的定制 --------------- %
 \RequirePackage{etoolbox}
@@ -570,5 +439,5 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 % --------------- 超链接与交叉引用 --------------- %
-\RequirePackage[hidelinks, bookmarksnumbered=true, breaklinks=true]{hyperref} %参数bookmarksnumbered使得PDF书签自带编号
+\RequirePackage[hidelinks, bookmarksnumbered=true, breaklinks=true, bookmarksopen=true]{hyperref} %参数bookmarksnumbered使得PDF书签自带编号
 % ======================================== %

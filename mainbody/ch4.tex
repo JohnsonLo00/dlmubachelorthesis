@@ -1,7 +1,44 @@
 
 \section{系统性能分析}
 
-{\bf 该章用于展示基于\verb|changes|宏包的批注功能。}
+{\bf 伪代码的使用示例如下所示。}
+
+\begin{algorithm}
+\SetKwData{Left}{left}\SetKwData{This}{this}\SetKwData{Up}{up} % 定义快捷变量，后续使用时只需：反斜杠+变量名
+\SetKwFunction{Union}{Union}\SetKwFunction{FindCompress}{FindCompress} % 定义函数，后续使用时只需：反斜杠+函数名
+\SetKwInOut{Input}{输入}\SetKwInOut{Output}{输出} %此处可自定义输入、输入的名称格式
+
+在此处添加不带编号的内容（若无，则将该行注释即可）。\\
+\LinesNumbered % 使下列算法描述带行号
+\Input{A bitmap $Im$ of size $w\times l$} % 输入
+\Output{A partition of the bitmap} % 输出
+\BlankLine
+
+\emph{special treatment of the first line}\;
+\For{$i\leftarrow 2$ \KwTo $l$}{
+  \emph{special treatment of the first element of line $i$}\;
+  \For{$j\leftarrow 2$ \KwTo $w$}{\label{forins}
+    \Left$\leftarrow$ \FindCompress{$Im[i,j-1]$}\;
+    \Up$\leftarrow$ \FindCompress{$Im[i-1,]$}\;
+    \This$\leftarrow$ \FindCompress{$Im[i,j]$}\;
+    \If( \tcp*[h]{此处添加注释：O(\Left,\This)==1} ){\Left compatible with \This}{\label{lt} % \tcp*[h]{...}表示非对齐的注释
+      \lIf{\Left $<$ \This}{\Union{\Left,\This}} %含else...的if语句用命令\lIf
+      \lElse{\Union{\This,\Left}}
+    }
+    \If(\tcp*[f]{O(\Up,\This)==1}){\Up compatible with \This}{\label{ut} % \tcp*[f]{...}表示居右对齐的注释
+      \lIf(\tcp*[f]{再次用Union函数}){\Up $<$ \This}{\Union{\Up,\This}}
+      \tcp{\This is put under \Up to keep tree as flat as possible}\label{cmt} % \tcp{...}表示行内的注释
+      \lElse{\Union{\This,\Up}}\tcp*[h]{\This linked to \Up}\label{lelse}
+    }
+  }
+  \lForEach{element $e$ of the line $i$}{\FindCompress{p}}
+}
+\caption{不相交分解(disjoint decomposition)}\label{pcode: 不相交分解} %伪代码对应算法的标题及其引用标签
+\end{algorithm}
+
+引用时的格式为：算法\ref{pcode: 不相交分解}实现了...。
+
+{\bf 下面用于展示基于\verb|changes|宏包的批注功能。}
 
 北冥有鱼，其名为鲲。鲲之大，不知其几千里也；化而为鸟，其名为鹏。鹏之背，不知其几千里也；怒而飞，其翼若垂天之云。\added[id=海哥, comment={少了一句}]{是鸟也，海运则将徙于南冥。}南冥者，天池也。《齐谐》者，志怪者也。《谐》之言曰：“鹏之徙于南冥也，水击三千里，抟扶摇而上者九万里，去以六月息者也。”野马也，尘埃也，生物之以息相吹也。\deleted[id=海哥, comment={这句话删掉}]{之乎者也。}天之苍苍，其正色邪？其远而无所至极邪？其视下也，亦若是则已矣。且夫水之积也不厚，则其负大舟也无力。覆杯水于\replaced[id=海老, comment={用错词}]{坳堂}{水堂}之上，则芥为之舟，置杯焉则胶，水浅而舟大也。风之积也不厚，则其负大翼也无力。故九万里，则风斯在下矣，而后乃今培风；背负青天，而莫之夭阏者，而后乃今将图南。蜩与学鸠笑之曰：“我决起而飞，抢榆枋而止，时则不至，而控于地而已矣，奚以之九万里而南为？”适莽苍者，三餐而反，腹犹果然；适百里者，宿舂粮；适千里者，三月聚粮。之二虫又何知！
 
