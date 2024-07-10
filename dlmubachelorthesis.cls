@@ -15,7 +15,7 @@
 
 % --------------- 全局设置 --------------- %
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{dlmubachelorthesis}[2024/06/01 v1.0 Unofficial LaTeX Template for DLMU Bachelor Thesis]
+\ProvidesClass{dlmubachelorthesis}[2024/07/10 v2.0 Unofficial LaTeX Template for DLMU Bachelor Thesis]
 % ======================================== %
 
 
@@ -149,12 +149,15 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- 目录样式 --------------- %
 \RequirePackage{titletoc}
+%% ---------- 一级标题样式 ---------- %
 \titlecontents{section}
 [0pt]
 {\addvspace{2pt}\filright}
 {\contentspush{\thecontentslabel\ }}
 {}
 {\titlerule*[8pt]{.}\contentspage}
+%% =================================== %
+%% ---------- 二级标题样式 ---------- %
 \if@dlmuthesis@bachelorh
 \titlecontents{subsubsection}
 [5em]
@@ -164,7 +167,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 {\titlerule*[8pt]{.}\contentspage}
 \else
 \fi
-
+%% =================================== %
 % ======================================== %
 
 
@@ -179,7 +182,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- 列表环境 --------------- %
 \RequirePackage[inline]{enumitem}
+\if@dlmuthesis@bachelors
 \setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, parsep=0pt}
+\else\if@dlmuthesis@bachelorh
+\setlist{leftmargin=0pt, itemindent=2\parindent, itemsep=0pt, nosep}
+\fi\fi
 % ======================================== %
 
 
@@ -253,14 +260,14 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
   {（\theparagraph）} %标题前的标签
   {1em} %标题和标签之间的间距
   {} %标题前没有额外的命令或内容
-\fi
+\fi\fi
 \titlespacing{\paragraph}
   {0pt} %标题左间距
   {0.5ex \@plus 1ex \@minus.2ex} %标题上间距
   {0.5ex \@plus .2ex} %标题下间距
 
 \newcommand{\fourthsection}[1]{\paragraph{#1}} %将命令\paragraph改名为四级标题
-% ======================================== %
+% ============================================================ %
 
 
 % --------------- 图、表标题样式 --------------- %
@@ -276,7 +283,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % --------------- 插图环境 --------------- %
 \RequirePackage{graphicx}
 \RequirePackage{float} %引入参数H
-\graphicspath{{figures/}} %可添加多个母目录，之间用逗号隔开
+\graphicspath{{figures/}{figures/STEM/}{figures/humanities/}} %可添加多个路径
 % ======================================== %
 
 
@@ -290,12 +297,41 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \RequirePackage{bigstrut} %【在跨行表格中输入定界符】
 \RequirePackage{makecell} %【封面表格横线的宽度】
 \RequirePackage{multicol} %【实现双栏/多栏环境】
+\RequirePackage{threeparttable} %【给表格下方添加注释】
 % ======================================== %
 
 
 % --------------- 调整行间距 --------------- %
 \RequirePackage{setspace}
 % ======================================== %
+
+
+% --------------- 设置脚注样式（文科类专业专用） --------------- %
+\RequirePackage{xfp} %在latex代码中执行数值加减运算
+\RequirePackage{pifont} %提供带圈的阿拉伯数字编号
+\RequirePackage[perpage]{footmisc} %设置简单的脚注样式
+%% 填“1”：仅阿拉伯数字
+%% 填“2”：[1], [2], ...
+%% 填“3”：(1), (2), ...
+%% 填“4”：带圈的阿拉伯数字
+\newcommand\footnotemode[1]{
+\ifthenelse{#1=1}{}{ %模式1
+  \ifthenelse{#1=2}{
+    \renewcommand{\thefootnote}{[\arabic{footnote}]} %模式2
+  }{
+    \ifthenelse{#1=3}{
+      \renewcommand{\thefootnote}{(\arabic{footnote})} %模式3
+    }{
+      \ifthenelse{#1=4}{
+        %% --------------- 模式4 --------------- %
+        \renewcommand{\thefootnote}{\ding{ \fpeval{171+\arabic{footnote}} }}
+        %% ======================================== %
+      }
+    }
+  }
+} %第一个\ifthenelse
+} %\renewcommand
+% ============================================================ %
 
 
 % --------------- 杂项 --------------- %
@@ -380,14 +416,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ================================================================================ %
 
 
-% --------------- 封面页的导入 --------------- %
-\newcommand{\makepages}{
-\makecoverpage
-}
-% ======================================== %
-
-
-% ------------------------- 封面页的导入 ------------------------- %
+% ------------------------- 封面页的创建 ------------------------- %
 \newcommand{\makecoverpage}{
   \thispagestyle{empty} %【无页眉页脚】
   \setlength{\extrarowheight}{9pt} %【设置表格行间距】
@@ -468,6 +497,12 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % ============================================================ %
 
 
+% --------------- 封面页的导入 --------------- %
+\newcommand{\makepages}{
+\makecoverpage
+}
+% ======================================== %
+
 
 % --------------- 对sty,cls的命令的定制 --------------- %
 \RequirePackage{etoolbox}
@@ -487,9 +522,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \clearpage\vspace*{0pt}
 }{\typeout{succeeds: aft-style of env thebibliography}}{\typeout{fails: aft-style of env thebibliography}}
 
+\pretocmd{\appendixsec}{
+\newpage
+}{\typeout{成功：附录环境下在下一个章节前前换页}}{\PackageError{失败：附录环境下在下一个章节前前换页}}
+
 % ======================================== %
 
 
 % --------------- 超链接与交叉引用 --------------- %
-\RequirePackage[hidelinks, bookmarksnumbered=true, breaklinks=true, bookmarksopen=true]{hyperref} %参数bookmarksnumbered使得PDF书签自带编号
+\RequirePackage[hidelinks, bookmarksnumbered=true, breaklinks=true, bookmarksopen=true]{hyperref}
 % ======================================== %

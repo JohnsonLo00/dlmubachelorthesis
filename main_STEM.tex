@@ -1,11 +1,11 @@
 % !Mode:: "TeX:UTF-8"
 
 % ---------- 声明文档类 ---------- %
-% 有三个非官方的可选参数：coverpage, bindingpage, titlepage
-% 分别表示显示封面页、显示装订页、显示标题页
-% 删掉参数即表示该页不显示
-%\documentclass[coverpage, bindingpage, titlepage]{dlmubachelorthesis}
-\documentclass[coverpage]{dlmubachelorthesis}
+% 有两个可选参数：bachelors、bachelorh
+%% bachelors：理工科模式
+%% bachelorh：文科模式
+% 添加哪个参数即表示选择哪种模式
+\documentclass[bachelors]{dlmubachelorthesis}
 % ================================================== %
 
 
@@ -43,18 +43,18 @@
 \begin{abstract}
 \input{mainbody/STEM/abstract_zh}
 \end{abstract}
+\newpage
 % ================================================== %	
 
-\newpage
 
 % ---------- 英文摘要 ---------- %
 \renewcommand\abstractname{\large ABSTRACT} %临时修改摘要名
 \begin{abstract}
 \input{mainbody/STEM/abstract_en}
 \end{abstract}
+\newpage
 % ================================================== %	
 
-\newpage
 
 % ---------- 目录 ---------- %
 \tableofcontents
@@ -62,9 +62,10 @@
 \newpage
 % ================================================== %	
 
-%【脚手架（疑惑）：无法用etoolbox宏包封装】
+
 \pagestyle{fancy} %从第一章到致谢，设置为有页眉、有页脚的模式
 \pagenumbering{arabic} %《手册》要求：从正文开始设为阿拉伯数字页码，并且重新从1开始计数
+
 
 % ---------- 正文首页标题 ---------- %
 \cntitleinMAINBODY %【插入中文标题】
@@ -81,7 +82,7 @@
 
 % ---------- 参考文献 ---------- %
 {\zihao{5} %【该句涉及到格式设置，请勿乱动】
-\bibliography{refs_STEM} %bib文件导入的形式生成参考文献列表
+\bibliography{refs/refs_STEM} %bib文件导入的形式生成参考文献列表
 %\begin{thebibliography}{100}
 %\bibitem{文献x标签}文献x信息
 %\end{thebibliography}
