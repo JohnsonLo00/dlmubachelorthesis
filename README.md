@@ -4,7 +4,7 @@ dlmubachelorthesis
 **2024大连海事大学本科毕业论文模板**
 
 **JL**, [yhlaozero2@163.com](yhlaozero2@163.com)
-**v2.0(2024/06)**
+**v2.0(2024/07)**
 
 ***
 
