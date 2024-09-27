@@ -4,7 +4,7 @@ dlmubachelorthesis
 **2024大连海事大学本科毕业论文模板**
 
 **JL**, [yhlaozero2@163.com](yhlaozero2@163.com)
-**v2.0(2024/07)**
+**v2.0.1(2024/09)**
 
 
 ### :tada::tada::tada: 更新预告 :tada::tada::tada:
@@ -83,13 +83,13 @@ dlmubachelorthesis(**D**a**l**ian **M**aritime **U**niversity **Bachelor Thesis*
 
 目前可从以下平台获取本模板：
 
--   [GitHub](https://github.com/JohnsonLo00/dlmubachelorthesis)
+- [GitHub](https://github.com/JohnsonLo00/dlmubachelorthesis)
 
--   [Gitee](https://gitee.com/jhonson-lo/dlmubachelorthesis)
+- [Gitee](https://gitee.com/jhonson-lo/dlmubachelorthesis)
 
--   [Overleaf](https://www.overleaf.com/latex/templates/dlmubachelorthesis-dalian-maritime-university-bachelor-thesis-latex-template/jmhcvgfckdyy)
+- Overleaf: 模板库搜索“dlmubachelorthesis”
 
-- [TeXPage](https://www.texpage.com/template/7227497e-4aa0-4a57-b11a-abec001c8533)
+- TeXPage: 模板库搜索“dlmubachelorthesis”
 
 ## 模板运行前的配置
 
@@ -147,8 +147,7 @@ main_humanities.tex：文科类专业模式下的中枢tex文件. 聚集各章�
 main_humanities.pdf：由main_humanities.tex编译生成的PDF文档
 main_STEM.tex：理工科专业模式下的中枢tex文件. 聚集各章节的tex文件为一体
 main_STEM.pdf：由main_STEM.tex编译生成的PDF文档
-simsun.ttc：宋体字体文件. 非Windows平台不一定支持宋体，
-            因此需另外调用专门的字体文件
+SourceHanSerifSC-Regular.otf：宋体字体文件. 云端平台需调用外置的字体文件
 thuthesis-bachelor.bst：参考文献样式文件. 用于控制参考文献列表的格式
 ```
 
@@ -172,6 +171,10 @@ thuthesis-bachelor.bst：参考文献样式文件. 用于控制参考文献列�
     -   数字电路绘制（宏包）：[CircuiTikZ](https://mirrors.ustc.edu.cn/CTAN/graphics/pgf/contrib/circuitikz/doc/circuitikzmanual.pdf)
 
 ## 修改日志
+
+#### v2.0.1, 2024-09-27
+
+- 修改了外置的宋体字体文件
 
 #### v2.0, 2024-07-10
 

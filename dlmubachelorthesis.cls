@@ -15,7 +15,7 @@
 
 % --------------- 全局设置 --------------- %
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{dlmubachelorthesis}[2024/07/10 v2.0 Unofficial LaTeX Template for DLMU Bachelor Thesis]
+\ProvidesClass{dlmubachelorthesis}[2024/09/27 v2.0.1 Unofficial LaTeX Template for DLMU Bachelor Thesis]
 % ======================================== %
 
 
@@ -137,12 +137,17 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 % --------------- 字体 --------------- %
 \RequirePackage{fontspec}
-% (1) 一般地，MacOS, WindowsOS内部都会安装有simsun字体（即宋体&新宋体）。
-% 因此在本地编译时，LaTeX引擎会调用本地自带的字体文件。
-% 若本地未安装该字体，双击字体文件simsun.ttc即可安装。
-% (2) 然而，采用云端编译时（即：overleaf等在线编辑器），就需要调用文件夹下的字体文件simsun.ttc。
-% 因此，该文件不可删掉。
-\setCJKmainfont[AutoFakeBold=3.0, AutoFakeSlant=0.3]{simsun.ttc} %中文字体设置
+\RequirePackage{ifplatform}
+% 在使用云端编辑器（e.g. overleaf等在线编辑器）下引入伪粗体时，需要调用外部字体文件
+
+%% ----- 中文字体设置 ----- %
+\ifwindows
+\setCJKmainfont[AutoFakeBold=3.0, AutoFakeSlant=0.3]{SimSun}
+\else
+\setCJKmainfont[AutoFakeBold=3.0, AutoFakeSlant=0.3]{SourceHanSerifSC-Regular.otf}
+\fi
+%% ============================== %
+
 \setmainfont{Times New Roman} %英文字体设置
 % ======================================== %
 
